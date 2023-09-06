@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'fusionsync/dist/fusion-sync.css' %}">
+{% endblock %}
+
+{% block body %}
+<div id="app">
+    <div id="userSpecifiedDiv"></div>
+    <input type="hidden" id="dataInputField" name="dataInputField" value="{{ dataInputField }}">
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="module">
+    import { FileUploader } from '{% static "fusionsync/dist/js/fusion-sync.js" %}'
+
+    // Initialization
+    const headers = {
+        'X-CSRFToken': '{{ csrf_token }}',
+    };
+
+    const upload = new FileUploader('userSpecifiedDiv');
+    upload.init({
+        setSignedUrl: '/api/s3-upload/',
+        setStorageUrl: '/api/fusion_sync/list/',
+        // setModelsName: 'app.Model.file',
+        setModelsName: 'fusion_sync.FusionSync.file',
+        setHeaders: headers,
+        fileAccept: '*/*',
+        multiple: true,
+        btnTitle: 'Upload Files',
+    });
+    // Register the 'onCompleted' event handler
+    upload.on('onCompleted', (data) => {
+        const dataId = data.resource_id
+        dataInputField.value += (dataInputField.value ? ',' : '') + dataId;
+    });
+</script>
+{% endblock %}
