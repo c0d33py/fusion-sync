@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'minio_storage',
     's3_file_field',
     'fusion_sync',
 ]

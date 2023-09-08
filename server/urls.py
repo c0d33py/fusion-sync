@@ -24,7 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/s3-upload/', include('s3_file_field.urls')),
     path('api/fusion_sync/', include('fusion_sync.urls')),
-    path('', TemplateView.as_view(template_name='index.html')),
 ]
 
 

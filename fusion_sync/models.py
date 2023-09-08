@@ -39,7 +39,6 @@ class FusionSync(FusionAbtract):
     """FusionSync model"""
 
     file = S3FileField(upload_to=get_upload_to, verbose_name='File (binary)')
-    # file = models.FileField(upload_to='fusion/', verbose_name='File (binary)')
     content_type = models.ForeignKey(
         ctype_models.ContentType,
         related_name='fusion_syncs',

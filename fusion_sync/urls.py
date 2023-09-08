@@ -2,6 +2,8 @@ from django.urls import path
 
 from .api.viewset import FusionSyncViewSet
 
+# from .views import index
+
 urlpatterns = [
     # List and Create
     path(
@@ -22,4 +24,6 @@ urlpatterns = [
         ),
         name='fusion_sync_detail',
     ),
+    # Index
+    # path('', index, name='fusion_sync_index'),
 ]
