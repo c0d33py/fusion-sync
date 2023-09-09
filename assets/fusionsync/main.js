@@ -2,7 +2,6 @@ import { FusionSync } from './src/sync'
 
 // Initialization
 console.log('FusionSync is running...');
-console.log('csrftoken: ', csrftoken);
 
 // Credentials
 const username = 'c0d3'; // Replace with your username
