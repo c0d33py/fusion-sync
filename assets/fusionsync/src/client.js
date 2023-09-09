@@ -15,7 +15,8 @@ export class S3FileFieldClient {
         const response = await this.api.post('upload-initialize/', {
             field_id: fieldId,
             file_name: file.name,
-            file_size: file.size
+            file_size: file.size,
+            content_type: file.type,
         });
         return response.data;
     }
