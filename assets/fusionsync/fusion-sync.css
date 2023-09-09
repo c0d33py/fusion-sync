@@ -4,10 +4,6 @@
     border: none;
     border-radius: 5px;
     padding: 15px 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    font-size: 14px;
     cursor: pointer
 }
 
@@ -22,10 +18,9 @@
     box-shadow: 0 5px 35px #cdcdcd;
     padding: 25px;
     color: #565252;
-    position: absolute;
-    bottom: 0%;
+    position: fixed;
+    bottom: 1%;
     right: 10px;
-    margin: 50px 0;
     transition: background .3s ease
 }
 
@@ -108,7 +103,7 @@
 
 .upload-progress-tracker .file-progress .file-details p .file-name {
     display: inline-block;
-    width: auto;
+    width: 85%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
@@ -128,21 +123,21 @@
     width: 35px;
     position: absolute;
     right: 0;
-    top: 5px;
+    bottom: 10px;
     text-align: right;
     margin-right: 0
 }
 
 .upload-progress-tracker .file-progress .file-details p .status.failed {
-    background: url(./failed.svg) center center/100% 100% no-repeat
+    background: url(./failed.svg) center 42%/18px 18px no-repeat
 }
 
 .upload-progress-tracker .file-progress .file-details p .status.completed {
-    background: url(./completed.svg) center center/100% 100% no-repeat
+    background: url(./completed.svg) center 42%/18px 18px no-repeat
 }
 
 .upload-progress-tracker .file-progress .file-details p .status.paused {
-    background: url(./paused-indicator.svg) center center/100% 100% no-repeat;
+    background: url(./paused-indicator.svg) center 42%/18px 18px no-repeat;
     right: auto;
     left: 0
 }
@@ -186,17 +181,17 @@
 }
 
 .upload-progress-tracker .file-progress .file-actions button.clear-btn {
-    background: url(./clear.svg) center 42%/20px 20px no-repeat
+    background: url(./clear.svg) center 42%/18px 18px no-repeat
 }
 
 .upload-progress-tracker .file-progress .file-actions button.retry-btn {
-    background: url(./retry.svg) center 42%/20px 20px no-repeat
+    background: url(./retry.svg) center 42%/18px 18px no-repeat
 }
 
 .upload-progress-tracker .file-progress .file-actions button.cancel-btn {
-    background: url(./paused.svg) center 42%/20px 20px no-repeat
+    background: url(./paused.svg) center 42%/18px 18px no-repeat
 }
 
 .upload-progress-tracker .file-progress .file-actions button.resume-btn {
-    background: url(./resume.svg) center 42%/20px 20px no-repeat
+    background: url(./resume.svg) center 42%/18px 18px no-repeat
 }

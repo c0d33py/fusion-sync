@@ -1,8 +1,8 @@
-import '../assets/fusion-sync.css';
+import '../fusion-sync.css';
 import { S3FileFieldClient } from './client.js'
 import axios from 'axios';
 
-export class FileUploader {
+export class FusionSync {
     constructor(divId) {
         this.divId = divId;
         this.files = new Map();
@@ -61,7 +61,7 @@ export class FileUploader {
         const progressBox = document.createElement('div');
         progressBox.className = 'upload-progress-tracker';
         progressBox.innerHTML = `
-                <h3>Uploading 0 Files</h3>
+                <h3>Uploading</h3>
                 <div class="file-progress-wrapper"></div>
             `;
         return progressBox;
