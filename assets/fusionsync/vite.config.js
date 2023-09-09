@@ -9,7 +9,7 @@ export default defineConfig({
         sourcemap: false,
         minify: true,
         lib: {
-            entry: resolve(__dirname, 'src/main.js'),
+            entry: resolve(__dirname, 'src/sync.js'),
             name: 'FusionSync',
             fileName: 'js/fusion-sync',
         },
