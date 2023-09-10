@@ -13,19 +13,19 @@
 {% endblock %}
 
 {% block javascript %}
+
 <script type="module">
-    import { FileUploader } from '{% static "fusionsync/dist/js/fusion-sync.js" %}'
+    import { FusionSync } from '{% static "fusionsync/dist/fusion-sync.js" %}'
 
     // Initialization
     const headers = {
         'X-CSRFToken': '{{ csrf_token }}',
     };
 
-    const upload = new FileUploader('userSpecifiedDiv');
+    const upload = new FusionSync('userSpecifiedDiv');
     upload.init({
         setSignedUrl: '/api/s3-upload/',
         setStorageUrl: '/api/fusion_sync/list/',
-        // setModelsName: 'app.Model.file',
         setModelsName: 'fusion_sync.FusionSync.file',
         setHeaders: headers,
         fileAccept: '*/*',
