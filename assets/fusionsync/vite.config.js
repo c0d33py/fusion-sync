@@ -1,26 +1,54 @@
 import { resolve } from 'path';
-import { defineConfig } from 'vite';
-import { terser } from 'rollup-plugin-terser'; // Import the terser plugin
+import { defineConfig } from 'vite'
+import { minify } from "terser";
+import autoprefixer from 'autoprefixer'
+
+function minifyBundles() {
+    return {
+        name: "minifyBundles",
+        async generateBundle(options, bundle) {
+            for (let key in bundle) {
+                if (bundle[key].type == 'chunk' && key.endsWith('.js')) {
+                    const minifyCode = await minify(bundle[key].code, { sourceMap: false })
+                    bundle[key].code = minifyCode.code
+                }
+            }
+            return bundle
+        },
+    }
+}
 
 export default defineConfig({
+    appType: 'custom',
+    css: {
+        devSourcemap: true,
+        postcss: {
+            plugins: [
+                autoprefixer
+            ],
+        }
+    },
     build: {
+        target: ['es2015'],
         outDir: 'dist',
-        assetsDir: '',
+        emptyOutDir: true,
+        cssCodeSplit: true,
         sourcemap: false,
-        minify: true,
         lib: {
-            entry: resolve(__dirname, 'src/sync.js'),
+            formats: ['es'],
+            entry: [
+                resolve(__dirname, './src/sync.js'),
+            ],
             name: 'FusionSync',
-            fileName: 'js/fusion-sync',
+            fileName: 'fusion-sync',
         },
         rollupOptions: {
             output: {
-                format: ['es', 'cjs', 'umd', 'iife'],
-                assetFileNames: 'fusion-sync.css',
+                assetFileNames: 'fusion-sync.[ext]',
             },
-            plugins: [
-                terser(),
-            ],
         },
     },
-});
+    plugins: [
+        minifyBundles()
+    ]
+})
