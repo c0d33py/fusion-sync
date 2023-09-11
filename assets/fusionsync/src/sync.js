@@ -1,8 +1,19 @@
+// FusionSync class to handle file uploads.
+// This class is responsible for:
+// - Creating the file input.
+// - Tracking the files that are being uploaded.
+// - Updating the file elements in the DOM.
+// - Uploading the files to S3.
+// - Sending the files to the storage endpoint.
+// - Triggering events.
+// - Registering event handlers.
+
 import '../fusion-sync.css';
 import { S3FileFieldClient } from './client.js'
 import axios from 'axios';
 
 export class FusionSync {
+    // Initialize the FusionSync instance with the given divId.
     constructor(divId) {
         this.divId = divId;
         this.files = new Map();
@@ -16,7 +27,7 @@ export class FusionSync {
         this.progressBox = this.createProgressBox();
         this.eventHandlers = {};
     }
-
+    // Initialize the FusionSync instance.
     init(options = {}) {
         this.options = options;
         this.apiClient = axios.create({
@@ -26,7 +37,7 @@ export class FusionSync {
         this.createFileInput();
         this.setupFileInputEventListeners();
     }
-
+    // Create the file input.
     createFileInput() {
         const input = document.createElement('input');
         input.type = 'file';
@@ -50,13 +61,13 @@ export class FusionSync {
 
         this.fileInput = input;
     }
-
+    // Setup event listeners for the file input.
     setupFileInputEventListeners() {
         this.fileInput.addEventListener('change', (e) => {
             this.trackUploadedFiles(e);
         });
     }
-
+    // Create the progress box.
     createProgressBox() {
         const progressBox = document.createElement('div');
         progressBox.className = 'upload-progress-tracker';
@@ -66,12 +77,12 @@ export class FusionSync {
             `;
         return progressBox;
     };
-
+    // Update the file element.
     updateFileElement(fileObject) {
         const fileDetails = fileObject.element.querySelector('.file-details');
         const status = fileDetails.querySelector('.status');
         const progressBar = fileDetails.querySelector('.progress-bar');
-
+        // Update the file element in the DOM.
         requestAnimationFrame(() => {
             status.textContent = fileObject.status === this.FILE_STATUS.COMPLETED
                 ? fileObject.status
@@ -86,7 +97,7 @@ export class FusionSync {
                         : '#222';
         });
     };
-
+    // Create a new file element.
     setFileElement(file) {
         const extIndex = file.name.lastIndexOf('.');
         const fileElement = document.createElement('div');
@@ -109,7 +120,7 @@ export class FusionSync {
         });
         this.progressBox.querySelector('.file-progress-wrapper').appendChild(fileElement);
     };
-
+    // When a file upload is in progress, update the file element.
     onProgress(e, file) {
         const fileObj = this.files.get(file);
         if (!fileObj) {
@@ -119,7 +130,7 @@ export class FusionSync {
         fileObj.percentage = Math.round((e.loaded / e.total) * 100);
         this.updateFileElement(fileObj);
     };
-
+    // When a file upload fails, update the file element.
     onError(e, file) {
         const fileObj = this.files.get(file);
 
@@ -127,30 +138,46 @@ export class FusionSync {
         fileObj.percentage = 100;
         this.updateFileElement(fileObj);
     };
-
+    // When a file is uploaded to S3, update the file element.
     onCompleted(file) {
         const fileObj = this.files.get(file);
 
         fileObj.status = this.FILE_STATUS.COMPLETED;
         fileObj.percentage = 100;
         this.updateFileElement(fileObj);
+        this.removeSpecificFile(file);
     };
-
+    // Register an event handler.
     on(eventName, callback) {
         if (!this.eventHandlers[eventName]) {
             this.eventHandlers[eventName] = [];
         }
         this.eventHandlers[eventName].push(callback);
     }
-
+    // Trigger an event.
     triggerEvent(eventName, data) {
         if (this.eventHandlers[eventName]) {
             this.eventHandlers[eventName].forEach(callback => callback(data));
         }
     }
 
+    // Remove a file from the list of files to be uploaded.
+    removeSpecificFile(file) {
+        const selectedFiles = Array.from(this.fileInput.files);
+
+        selectedFiles.splice(selectedFiles.indexOf(file), 1);
+
+        const modifiedFileList = new DataTransfer();
+        for (const file of selectedFiles) {
+            modifiedFileList.items.add(file);
+        }
+
+        this.fileInput.files = modifiedFileList.files;
+    }
+
     trackUploadedFiles(event) {
-        const uploadedFiles = event.target.files;
+        const targetSelected = event.target.files;
+        // Create a new instance of the S3FileFieldClient.
         this.s3ffClient = new S3FileFieldClient({
             baseUrl: this.options.setSignedUrl,
             onCompleted: (e, file) => this.onCompleted(e, file),
@@ -158,14 +185,15 @@ export class FusionSync {
             onProgress: (e, file) => this.onProgress(e, file),
             apiConfig: this.apiClient.defaults
         });
-
-        [...uploadedFiles].forEach(async (file) => {
+        // Upload each file to S3.
+        [...targetSelected].forEach(async (file, index) => {
             this.setFileElement(file);
             const fieldValue = await this.s3ffClient.uploadFile(
                 file,
                 this.options.setModelsName,
             );
-
+            // If the file was uploaded to S3, send the file to the storage endpoint.
+            // Otherwise, update the file element to show that the upload failed.
             if (fieldValue) {
                 (async () => {
                     try {
@@ -173,7 +201,6 @@ export class FusionSync {
                             file: fieldValue,
                         });
                         this.onCompleted(file);
-                        // When a file upload is completed, trigger the 'onCompleted' event
                         this.triggerEvent('onCompleted', res.data);
                     } catch (error) {
                         this.onError(error, file);
