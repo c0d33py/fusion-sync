@@ -19,7 +19,6 @@ function minifyBundles() {
 }
 
 export default defineConfig({
-    appType: 'custom',
     css: {
         devSourcemap: true,
         postcss: {
