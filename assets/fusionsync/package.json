@@ -14,5 +14,10 @@
     "axios": "^1.5.0",
     "rollup-plugin-terser": "^7.0.2",
     "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "@uppy/core": "^3.5.0",
+    "@uppy/dashboard": "^3.5.2",
+    "@uppy/progress-bar": "^3.0.3"
   }
 }
