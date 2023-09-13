@@ -16,6 +16,7 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "@uppy/aws-s3": "^3.3.0",
     "@uppy/core": "^3.5.0",
     "@uppy/dashboard": "^3.5.2",
     "@uppy/progress-bar": "^3.0.3"
