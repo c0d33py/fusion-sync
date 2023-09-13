@@ -1,14 +1,12 @@
 import axios from 'axios';
 
-export class S3FileFieldClient {
+export default class S3FileFieldClient {
     constructor(options) {
         const { baseUrl, apiConfig = {} } = options;
         this.api = axios.create(Object.assign({}, apiConfig, {
             baseURL: baseUrl.replace(/\/?$/, '/')
         }));
         this.onProgress = options.onProgress;
-        this.onCompleted = options.onCompleted;
-        this.onError = options.onError;
     }
 
     async initializeUpload(file, fieldId) {
@@ -28,11 +26,13 @@ export class S3FileFieldClient {
             const chunk = file.slice(fileOffset, fileOffset + part.size);
             const response = await this.api.put(part.upload_url, chunk, {
                 onUploadProgress: (e) => {
-                    this.onProgress({
-                        ...e,
-                        total: file.size,
-                        loaded: fileOffset + e.loaded,
-                    }, file, dataId);
+                    // Emit Uppy's 'upload-progress' event with progress information
+                    this.onProgress(
+                        dataId,
+                        e.loaded,
+                        e.total,
+                    );
+
                 }
             });
             uploadedParts.push({
@@ -74,7 +74,6 @@ export class S3FileFieldClient {
             return value;
         } catch (e) {
             console.error('Error uploading file:', e.message);
-            this.onError(e, file);
         }
     }
 }
