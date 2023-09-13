@@ -23,7 +23,6 @@ uppy.use(MinioUploader, {
     baseUrl: 'http://localhost:8000/api/s3-upload/',
     apiConfig: {},
     // onProgress: (file, bytesUploaded, bytesTotal) => onProgress(file, bytesUploaded, bytesTotal),
-
     // fieldName: 'file',
     // onBeforeUpload: (files) => { },
     // onBeforeSend: (formData, file) => { },
@@ -36,20 +35,6 @@ uppy.use(MinioUploader, {
     // validateRestrictions: (file) => { },
 });
 
-// uppy.on('upload', (data) => {
-//     const filesArr = uppy.getFiles();
-
-//     const s3Api = new S3FileFieldClient({
-//         baseUrl: 'http://localhost:8000/api/s3-upload/',
-//         apiConfig: {},
-// onProgress: (e, file, id) => onProgress(e, file, id),
-//     });
-
-// [...filesArr].forEach(async (file) => {
-//     const fieldValue = await s3Api.uploadFile(file.data, file.id, 'fusion_sync.FusionSync.file');
-//     console.log(fieldValue);
-// });
-// });
 
 function onProgress(file, bytesUploaded, bytesTotal) {
     uppy.setFileState(dataId, {
