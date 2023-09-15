@@ -3,10 +3,10 @@
 // - Creating the file input.
 // - Tracking the files that are being uploaded.
 // - Updating the file elements in the DOM.
-// - Uploading the files to S3.
-// - Sending the files to the storage endpoint.
 // - Triggering events.
 // - Registering event handlers.
+// - Uploading the files to S3.
+// - Sending the files to the storage endpoint.
 
 import '../fusion-sync.css';
 import { S3FileFieldClient } from './client.js'
@@ -65,6 +65,7 @@ export class FusionSync {
     setupFileInputEventListeners() {
         this.fileInput.addEventListener('change', (e) => {
             this.trackUploadedFiles(e);
+            this.progressBox.style.display = 'block';
         });
     }
     // Create the progress box.
@@ -75,6 +76,7 @@ export class FusionSync {
                 <h3>Uploading</h3>
                 <div class="file-progress-wrapper"></div>
             `;
+        // progressBox.style.display = 'block';
         return progressBox;
     };
     // Update the file element.
@@ -160,7 +162,6 @@ export class FusionSync {
             this.eventHandlers[eventName].forEach(callback => callback(data));
         }
     }
-
     // Remove a file from the list of files to be uploaded.
     removeSpecificFile(file) {
         const selectedFiles = Array.from(this.fileInput.files);
@@ -174,7 +175,7 @@ export class FusionSync {
 
         this.fileInput.files = modifiedFileList.files;
     }
-
+    // Track the files that are being uploaded.
     trackUploadedFiles(event) {
         const targetSelected = event.target.files;
         // Create a new instance of the S3FileFieldClient.
@@ -202,6 +203,10 @@ export class FusionSync {
                         });
                         this.onCompleted(file);
                         this.triggerEvent('onCompleted', res.data);
+                        // hide main progress box
+                        if (index === targetSelected.length - 1) {
+                            this.progressBox.style.display = 'none';
+                        }
                     } catch (error) {
                         this.onError(error, file);
                         console.error('Error uploading file:', error.message);

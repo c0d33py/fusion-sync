@@ -12,15 +12,16 @@
 }
 
 .upload-progress-tracker {
+    position: fixed;
+    z-index: 1000;
+    bottom: 1%;
+    right: 10px;
     background: #ffffff linear-gradient(45deg, #f4edff, #efffef) left center/100% 100% no-repeat;
     width: 400px;
     border-radius: 10px;
     box-shadow: 0 5px 35px #cdcdcd;
     padding: 25px;
     color: #565252;
-    position: fixed;
-    bottom: 1%;
-    right: 10px;
     transition: background .3s ease
 }
 
