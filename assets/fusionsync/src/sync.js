@@ -203,10 +203,15 @@ export class FusionSync {
                         });
                         this.onCompleted(file);
                         this.triggerEvent('onCompleted', res.data);
-                        // hide main progress box
-                        if (index === targetSelected.length - 1) {
-                            this.progressBox.style.display = 'none';
-                        }
+                        // hide main progress
+
+                        this.files.forEach((file) => {
+                            if (file.status === this.FILE_STATUS.COMPLETED) {
+                                this.progressBox.style.display = 'none';
+                            }
+                        });
+
+                        console.log(this.files)
                     } catch (error) {
                         this.onError(error, file);
                         console.error('Error uploading file:', error.message);
