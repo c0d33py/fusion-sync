@@ -1,0 +1,2 @@
+django-s3-file-field # @ git+https://github.com/c0d33py/django-s3-file-field@afeb1c95f1567d9e022e576e02dc905d085423e0
+# minio==7.1.16

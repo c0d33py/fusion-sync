@@ -1,7 +1,6 @@
 import logging
 
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 
 from .models import FusionSync
 
