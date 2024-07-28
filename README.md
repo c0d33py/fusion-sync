@@ -68,4 +68,4 @@ Contributions are welcome! Please open an issue or submit a pull request on GitH
 
 ## Acknowledgements
 
-Special thanks to the developers of **`django-minio-storage`**, **`django-s3-file-field`**, and **`django-tus`** for their excellent libraries.
+Special thanks to the developers of [**django-minio-storage**](https://github.com/py-pa/django-minio-storage), [**django-s3-file-field**](https://github.com/kitware-resonant/django-s3-file-field/) and [**django-tus**](<(https://github.com/alican/django-tus)>) for their excellent libraries.
