@@ -61,7 +61,7 @@ def my_view(request):
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](https://github.com/c0d33py/fusion-sync/blob/master/LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [MIT License](LICENSE) file for details.
 
 ## Contributing
 
