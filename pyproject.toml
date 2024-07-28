@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fusion-sync"
+version = "0.1.0"
+description = "A Django file uploader package that integrates with django-minio-storage, django-s3-file-field, and django-tus."
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+readme = "README.md"
+license = {text = "Apache-2.0"}
+dependencies = [
+    "Django>=3.2",
+    "django-minio-storage>=0.1.0",
+    "django-s3-file-field>=0.1.0",
+    "django-tus>=0.1.0"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Framework :: Django",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/fusion-sync"
