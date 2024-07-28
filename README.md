@@ -23,32 +23,33 @@ pip install fusion-sync
 
 1. Add **fusion_sync** to your Django **INSTALLED_APPS**:
 
-```py
-INSTALLED_APPS = [
-    ...
-    'fusion_sync',
-    ...
-]
-```
+    ```py
+    INSTALLED_APPS = [
+        ...
+        'fusion_sync',
+        ...
+    ]
+    ```
 
 2. Configure your preferred storage backend in **settings.py**:
 
-```py
-# Example for MinIO
-DEFAULT_FILE_STORAGE = 'django_minio_storage.storage.MinioMediaStorage'
+    ```py
+    # Example for MinIO
+    DEFAULT_FILE_STORAGE = 'django_minio_storage.storage.MinioMediaStorage'
 
-MINIO_STORAGE_ENDPOINT = 'minio.example.com'
-MINIO_STORAGE_ACCESS_KEY = 'your-access-key'
-MINIO_STORAGE_SECRET_KEY = 'your-secret-key'
-MINIO_STORAGE_USE_HTTPS = True
-MINIO_STORAGE_MEDIA_BUCKET_NAME = 'media'
-MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
-MINIO_STORAGE_BUCKET_NAME = 'media'
-```
+    MINIO_STORAGE_ENDPOINT = 'minio.example.com'
+    MINIO_STORAGE_ACCESS_KEY = 'your-access-key'
+    MINIO_STORAGE_SECRET_KEY = 'your-secret-key'
+    MINIO_STORAGE_USE_HTTPS = True
+    MINIO_STORAGE_MEDIA_BUCKET_NAME = 'media'
+    MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+    MINIO_STORAGE_BUCKET_NAME = 'media'
+    ```
 
 3. Use the uploader in your Django views or models:
 
 ```py
+# Views.py
 from fusion_sync.uploader import upload_file
 
 def my_view(request):
