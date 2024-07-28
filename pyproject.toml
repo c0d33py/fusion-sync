@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "fusion-sync"
 version = "0.1.0"
-description = "A Django file uploader package that integrates with django-minio-storage, django-s3-file-field, and django-tus."
+description = "A Django file uploader library that integrates with django-minio-storage, django-s3-file-field, and django-tus."
 authors = [
     {name = "Your Name", email = "your.email@example.com"}
 ]

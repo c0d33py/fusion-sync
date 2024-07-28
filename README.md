@@ -1,6 +1,6 @@
 # Fusion Sync
 
-Fusion Sync is a Django package for advanced file uploading, supporting integration with various storage backends like MinIO, S3, and TUS.
+Fusion Sync is a Django library for advanced file uploading, supporting integration with various storage backends like MinIO, S3, and TUS.
 
 ## Features
 
