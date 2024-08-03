@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.contenttypes import models as ctype_models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db import models
-from s3_file_field import S3FileField
+from s3_file_field.fields import S3FileField
 
 from .utils import get_upload_to
 

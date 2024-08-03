@@ -1,3 +1,4 @@
+import logging
 import os
 import random
 import string
@@ -5,6 +6,8 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.db import connection
+
+logger = logging.getLogger(__name__)
 
 
 def get_schema_name():
@@ -54,3 +57,19 @@ def get_upload_to(instance, filename):
         return f'{upload_to}/{schema_name}/{filename}'.lstrip('/')
 
     return f'{upload_to}/{schema_name}/{uuid4()}/{filename}'.lstrip('/')
+
+
+def get_uploaded_content(instance: int, data: list):
+    """Get the uploaded content make a relation with the instance."""
+    from fusion_sync.models import FusionSync
+
+    resource_ids = data.split(',')
+
+    for resource_id in resource_ids:
+        try:
+            file = FusionSync.objects.get(resource_id=str(resource_id))
+            file.content_object = instance
+            file.save()
+            logger.info("File uploaded successfully")
+        except FusionSync.DoesNotExist:
+            logger.error("File does not exist")

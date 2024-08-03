@@ -17,4 +17,4 @@ def index(request):
         'form': form,
         'fusions': FusionSync.objects.all(),
     }
-    return render(request, 'index_forms.html', context)
+    return render(request, 'aws.html', context)

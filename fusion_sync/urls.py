@@ -1,29 +1,12 @@
-from django.urls import path
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
 
 from .api.viewset import FusionSyncViewSet
+from .views import index
 
-# from .views import index
+router = DefaultRouter()
+router.register('', FusionSyncViewSet, basename='fusion_sync')
 
 urlpatterns = [
-    # List and Create
-    path(
-        'list/',
-        FusionSyncViewSet.as_view({'get': 'list', 'post': 'create'}),
-        name='fusion_sync_list',
-    ),
-    # Retrieve, Update, Partial Update, and Delete
-    path(
-        'detail/<int:pk>/',
-        FusionSyncViewSet.as_view(
-            {
-                'get': 'retrieve',
-                'put': 'update',
-                'patch': 'partial_update',
-                'delete': 'destroy',
-            }
-        ),
-        name='fusion_sync_detail',
-    ),
-    # Index
-    # path('', index, name='fusion_sync_index'),
+    path('', include(router.urls)),
 ]
